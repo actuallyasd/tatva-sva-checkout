@@ -15,7 +15,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F9F8F6; /* Warm cream */
+            background-color: #F9F8F6;
             color: #1A1A1A;
             display: flex;
             justify-content: center;
@@ -30,7 +30,7 @@
         /* Container */
         #app-container {
             width: 100%;
-            max-width: 480px; /* Mobile-optimized luxury feel */
+            max-width: 480px;
             background: #FFFFFF;
             padding: 40px 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
@@ -114,6 +114,41 @@
         /* Gallery */
         .gallery { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory;}
         .gallery img { width: 85%; height: 220px; object-fit: cover; scroll-snap-align: center; border-radius: 2px; flex-shrink: 0; }
+        
+        /* Location Block */
+        .location-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #FAFAFA;
+            border: 1px solid #E0E0E0;
+            border-radius: 2px;
+        }
+        .location-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .location-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .location-rating {
+            font-size: 12px;
+            font-weight: 600;
+            background: #1A1A1A;
+            color: #FFF;
+            padding: 4px 8px;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
+        }
+        .map-iframe {
+            width: 100%;
+            height: 180px;
+            border: none;
+            border-radius: 2px;
+        }
 
         /* Timer */
         .timer-box { background: #1A1A1A; color: white; text-align: center; padding: 12px; margin-bottom: 25px; font-size: 14px; letter-spacing: 1px;}
@@ -134,12 +169,29 @@
         <div class="timer-box" id="countdown">Loading timer...</div>
         
         <div class="gallery">
-            <!-- Ensure these images exist in your assets folder -->
-            <img src="assets/gallery1.jpg" alt="Tirthan Valley Lodge">
-            <img src="assets/gallery2.jpg" alt="Private Rooms">
+            <img src="assets/gallery1.jpg" alt="Tirthan Valley Retreat 1">
+            <img src="assets/gallery2.jpg" alt="Tirthan Valley Retreat 2">
+            <img src="assets/gallery3.jpg" alt="Tirthan Valley Retreat 3">
+            <img src="assets/gallery4.jpg" alt="Tirthan Valley Retreat 4">
+            <img src="assets/gallery5.jpg" alt="Tirthan Valley Retreat 5">
+            <img src="assets/gallery6.jpg" alt="Tirthan Valley Retreat 6">
+            <img src="assets/gallery7.jpg" alt="Tirthan Valley Retreat 7">
+            <img src="assets/gallery8.jpg" alt="Tirthan Valley Retreat 8">
+            <img src="assets/gallery9.jpg" alt="Tirthan Valley Retreat 9">
+            <img src="assets/gallery10.jpg" alt="Tirthan Valley Retreat 10">
+        </div>
+        
+        <!-- Maps & Rating Module -->
+        <div class="location-box">
+            <div class="location-header">
+                <span class="location-name">The Woods, Tirthan</span>
+                <span class="location-rating">★ 4.9/5</span>
+            </div>
+            <!-- Clean Google Maps Embed without requiring API keys -->
+            <iframe class="map-iframe" src="https://maps.google.com/maps?q=The%20Woods,%20Tirthan%20Valley&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
         </div>
 
-        <p class="subtitle" style="margin-top:20px;">Step entirely off the grid. Only 15 spots available.</p>
+        <p class="subtitle" style="margin-bottom: 15px;">Step entirely off the grid. Only 15 spots available.</p>
         <button class="btn" onclick="nextStep(1)">Apply Now</button>
     </div>
 
@@ -258,7 +310,6 @@
                 el.classList.add('selected');
                 userPayload.needs.push(needText);
             } else {
-                // Flash red if they try to click a 3rd
                 el.style.borderColor = "#d9534f";
                 setTimeout(() => el.style.borderColor = "#E0E0E0", 500);
             }
@@ -292,9 +343,8 @@
     function selectRoom(type, price, original, cardId) {
         userPayload.roomType = type;
         userPayload.totalPrice = price;
-        userPayload.depositAmount = price / 2; // 50% deposit
+        userPayload.depositAmount = price / 2;
 
-        // UI update
         document.getElementById('room-bunk').classList.remove('selected');
         document.getElementById('room-private').classList.remove('selected');
         document.getElementById(cardId).classList.add('selected');
@@ -304,11 +354,8 @@
             document.getElementById('err-step4').style.display = "block";
         } else {
             document.getElementById('err-step4').style.display = "none";
-            
-            // Populate Checkout Text
-            document.getElementById('out-name').innerText = userPayload.name.split(' ')[0]; // First name only
+            document.getElementById('out-name').innerText = userPayload.name.split(' ')[0]; 
             document.getElementById('out-room').innerText = userPayload.roomType;
-            // Format to INR Currency string
             document.getElementById('out-deposit').innerText = "₹" + userPayload.depositAmount.toLocaleString('en-IN');
             
             nextStep(4);
@@ -327,24 +374,18 @@
         // 2. ADD FOUNDER WHATSAPP NUMBER HERE (Include Country Code, No '+')
         const WHATSAPP_NUMBER = "919999999999"; 
 
-        // Send silent fetch to webhook
         fetch(WEBHOOK_URL, {
             method: 'POST',
-            mode: 'no-cors', // Avoids preflight CORS errors for quick Sheets drops
+            mode: 'no-cors', 
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(userPayload)
         })
         .then(() => {
-            // Regardless of response, open WhatsApp
             const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType} for the Oct 23 retreat. Here is my payment screenshot!`;
-            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            
-            // Redirect to WhatsApp
-            window.location.href = waUrl;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         })
         .catch(err => {
             console.error("Webhook Error:", err);
-            // Even if webhook fails, let them send the WhatsApp message
             const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType}.`;
             window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         });
