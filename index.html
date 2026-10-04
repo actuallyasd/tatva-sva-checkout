@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatva-sva Tirthan | Executive Retreat</title>
+    
+    <!-- Google Fonts for Luxury Editorial Feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global & Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F8F6; /* Warm cream */
+            color: #1A1A1A;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+        }
+        
+        /* Container */
+        #app-container {
+            width: 100%;
+            max-width: 480px; /* Mobile-optimized luxury feel */
+            background: #FFFFFF;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Step Logic */
+        .step { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Typography & Elements */
+        .title { font-size: 28px; margin-bottom: 10px; text-align: center; }
+        .subtitle { font-size: 14px; color: #666; text-align: center; margin-bottom: 30px; line-height: 1.5; }
+        .label { font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        input[type="text"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #E0E0E0;
+            border-radius: 2px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            background: #FAFAFA;
+            outline: none;
+            transition: border 0.3s;
+        }
+        input:focus, textarea:focus { border-color: #1A1A1A; }
+        
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #1A1A1A;
+            color: #FFF;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        .btn:hover { background: #333; }
+        .btn-outline { background: transparent; color: #1A1A1A; border: 1px solid #1A1A1A; margin-top: 15px; }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp:hover { background: #1ebd5a; }
+
+        /* Custom Selection UI */
+        .select-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+        .select-btn {
+            padding: 16px;
+            border: 1px solid #E0E0E0;
+            background: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .select-btn.selected { border-color: #1A1A1A; background: #1A1A1A; color: white; }
+
+        /* Pricing Cards */
+        .rate-card {
+            border: 1px solid #E0E0E0;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .rate-card.selected { border: 2px solid #1A1A1A; }
+        .rate-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 5px; }
+        .rate-price { font-size: 18px; font-weight: 500; }
+        .strike { text-decoration: line-through; color: #999; font-size: 14px; margin-left: 8px; }
+        .early-badge { display: inline-block; background: #f0e6d2; color: #8a6d3b; font-size: 11px; padding: 3px 8px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+
+        /* Gallery */
+        .gallery { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory;}
+        .gallery img { width: 85%; height: 220px; object-fit: cover; scroll-snap-align: center; border-radius: 2px; flex-shrink: 0; }
+
+        /* Timer */
+        .timer-box { background: #1A1A1A; color: white; text-align: center; padding: 12px; margin-bottom: 25px; font-size: 14px; letter-spacing: 1px;}
+        
+        /* Error message */
+        .error { color: #d9534f; font-size: 13px; display: none; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+
+    <!-- STEP 1: Landing & Urgency -->
+    <div class="step active" id="step-1">
+        <h1 class="title">Tatva-sva Tirthan</h1>
+        <p class="subtitle">Oct 23-26 | 72 hours of complete stillness.</p>
+        
+        <div class="timer-box" id="countdown">Loading timer...</div>
+        
+        <div class="gallery">
+            <!-- Ensure these images exist in your assets folder -->
+            <img src="assets/gallery1.jpg" alt="Tirthan Valley Lodge">
+            <img src="assets/gallery2.jpg" alt="Private Rooms">
+        </div>
+
+        <p class="subtitle" style="margin-top:20px;">Step entirely off the grid. Only 15 spots available.</p>
+        <button class="btn" onclick="nextStep(1)">Apply Now</button>
+    </div>
+
+    <!-- STEP 2: The Intent -->
+    <div class="step" id="step-2">
+        <h2 class="title">The Intention</h2>
+        <p class="subtitle">What do you need a little more of in your life right now? (Select up to 2)</p>
+        
+        <div class="select-grid" id="needs-grid">
+            <div class="select-btn" onclick="toggleNeed(this, 'Rest & Slowness')">Rest & Slowness</div>
+            <div class="select-btn" onclick="toggleNeed(this, 'Clarity')">Clarity</div>
+            <div class="select-btn" onclick="toggleNeed(this, 'Connection with Nature')">Connection with Nature</div>
+            <div class="select-btn" onclick="toggleNeed(this, 'Time with myself')">Time with myself</div>
+        </div>
+        
+        <div id="err-step2" class="error">Please select at least one option.</div>
+        <button class="btn" onclick="validateStep2()">Continue</button>
+        <button class="btn btn-outline" onclick="prevStep(2)">Back</button>
+    </div>
+
+    <!-- STEP 3: Details -->
+    <div class="step" id="step-3">
+        <h2 class="title">Your Details</h2>
+        <p class="subtitle">Just the essentials before we meet.</p>
+        
+        <label class="label">Full Name</label>
+        <input type="text" id="entry-name" placeholder="E.g. Sarah Jenkins">
+        
+        <label class="label">WhatsApp Number</label>
+        <input type="tel" id="entry-phone" placeholder="+91">
+        
+        <label class="label">Where are you travelling from?</label>
+        <input type="text" id="entry-city" placeholder="City, Country">
+        
+        <label class="label">Dietary/Accessibility Needs (Optional)</label>
+        <textarea id="entry-notes" rows="2" placeholder="Any preferences or requirements?"></textarea>
+
+        <div id="err-step3" class="error">Please fill in your name and WhatsApp number.</div>
+        <button class="btn" onclick="validateStep3()">Continue</button>
+        <button class="btn btn-outline" onclick="prevStep(3)">Back</button>
+    </div>
+
+    <!-- STEP 4: Rate Card -->
+    <div class="step" id="step-4">
+        <h2 class="title">Select Your Space</h2>
+        <p class="subtitle">Prices shown are Early Bird rates.</p>
+        
+        <div class="rate-card" id="room-bunk" onclick="selectRoom('Bunk Bed', 17999, 22000, 'room-bunk')">
+            <span class="early-badge">Early Bird</span>
+            <div class="rate-title">Bunk Bed</div>
+            <div class="rate-price">₹17,999 <span class="strike">₹22,000</span></div>
+        </div>
+
+        <div class="rate-card" id="room-private" onclick="selectRoom('Private Room', 18999, 24000, 'room-private')">
+            <span class="early-badge">Early Bird</span>
+            <div class="rate-title">Private Room</div>
+            <div class="rate-price">₹18,999 <span class="strike">₹24,000</span></div>
+        </div>
+
+        <div id="err-step4" class="error">Please select a room.</div>
+        <button class="btn" onclick="validateStep4()">Review & Pay Deposit</button>
+        <button class="btn btn-outline" onclick="prevStep(4)">Back</button>
+    </div>
+
+    <!-- STEP 5: Checkout / Handoff -->
+    <div class="step" id="step-5">
+        <h2 class="title" style="margin-bottom: 20px;">Complete Booking</h2>
+        <p class="subtitle" style="margin-bottom: 20px;" id="checkout-text">
+            Your profile looks like a great fit, <span id="out-name" style="font-weight:600;"></span>.<br><br>
+            To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
+        </p>
+        
+        <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px;">
+            <p class="label">Pay Via UPI</p>
+            <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px;">tatvasva@upi</p>
+        </div>
+
+        <button class="btn btn-whatsapp" onclick="submitDataAndWhatsApp()" id="submit-btn">I've Paid - Send Screenshot</button>
+        <button class="btn btn-outline" onclick="prevStep(5)">Wait, go back</button>
+    </div>
+
+</div>
+
+<script>
+    /* --- DATA STATE --- */
+    const userPayload = {
+        needs: [],
+        name: "",
+        phone: "",
+        city: "",
+        notes: "",
+        roomType: "",
+        totalPrice: 0,
+        depositAmount: 0
+    };
+
+    /* --- STEP NAVIGATION --- */
+    function nextStep(current) {
+        document.getElementById(`step-${current}`).classList.remove('active');
+        document.getElementById(`step-${current + 1}`).classList.add('active');
+        window.scrollTo(0,0);
+    }
+    function prevStep(current) {
+        document.getElementById(`step-${current}`).classList.remove('active');
+        document.getElementById(`step-${current - 1}`).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    /* --- STEP 2 LOGIC --- */
+    function toggleNeed(el, needText) {
+        if (el.classList.contains('selected')) {
+            el.classList.remove('selected');
+            userPayload.needs = userPayload.needs.filter(n => n !== needText);
+        } else {
+            if (userPayload.needs.length < 2) {
+                el.classList.add('selected');
+                userPayload.needs.push(needText);
+            } else {
+                // Flash red if they try to click a 3rd
+                el.style.borderColor = "#d9534f";
+                setTimeout(() => el.style.borderColor = "#E0E0E0", 500);
+            }
+        }
+    }
+    function validateStep2() {
+        if(userPayload.needs.length === 0) {
+            document.getElementById('err-step2').style.display = "block";
+        } else {
+            document.getElementById('err-step2').style.display = "none";
+            nextStep(2);
+        }
+    }
+
+    /* --- STEP 3 LOGIC --- */
+    function validateStep3() {
+        userPayload.name = document.getElementById('entry-name').value.trim();
+        userPayload.phone = document.getElementById('entry-phone').value.trim();
+        userPayload.city = document.getElementById('entry-city').value.trim();
+        userPayload.notes = document.getElementById('entry-notes').value.trim();
+
+        if(!userPayload.name || !userPayload.phone) {
+            document.getElementById('err-step3').style.display = "block";
+        } else {
+            document.getElementById('err-step3').style.display = "none";
+            nextStep(3);
+        }
+    }
+
+    /* --- STEP 4 LOGIC --- */
+    function selectRoom(type, price, original, cardId) {
+        userPayload.roomType = type;
+        userPayload.totalPrice = price;
+        userPayload.depositAmount = price / 2; // 50% deposit
+
+        // UI update
+        document.getElementById('room-bunk').classList.remove('selected');
+        document.getElementById('room-private').classList.remove('selected');
+        document.getElementById(cardId).classList.add('selected');
+    }
+    function validateStep4() {
+        if(!userPayload.roomType) {
+            document.getElementById('err-step4').style.display = "block";
+        } else {
+            document.getElementById('err-step4').style.display = "none";
+            
+            // Populate Checkout Text
+            document.getElementById('out-name').innerText = userPayload.name.split(' ')[0]; // First name only
+            document.getElementById('out-room').innerText = userPayload.roomType;
+            // Format to INR Currency string
+            document.getElementById('out-deposit').innerText = "₹" + userPayload.depositAmount.toLocaleString('en-IN');
+            
+            nextStep(4);
+        }
+    }
+
+    /* --- FINAL SUBMISSION & WHATSAPP --- */
+    function submitDataAndWhatsApp() {
+        const btn = document.getElementById('submit-btn');
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        // 1. ADD YOUR APPS SCRIPT WEBHOOK URL HERE
+        const WEBHOOK_URL = "YOUR_GOOGLE_SCRIPT_WEBHOOK_URL_HERE"; 
+        
+        // 2. ADD FOUNDER WHATSAPP NUMBER HERE (Include Country Code, No '+')
+        const WHATSAPP_NUMBER = "919999999999"; 
+
+        // Send silent fetch to webhook
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Avoids preflight CORS errors for quick Sheets drops
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(userPayload)
+        })
+        .then(() => {
+            // Regardless of response, open WhatsApp
+            const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType} for the Oct 23 retreat. Here is my payment screenshot!`;
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            // Redirect to WhatsApp
+            window.location.href = waUrl;
+        })
+        .catch(err => {
+            console.error("Webhook Error:", err);
+            // Even if webhook fails, let them send the WhatsApp message
+            const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType}.`;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        });
+    }
+
+    /* --- COUNTDOWN TIMER --- */
+    const countDownDate = new Date("Oct 12, 2026 23:59:59").getTime();
+    const timerEl = document.getElementById("countdown");
+
+    const x = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        timerEl.innerHTML = `EARLY BIRD CLOSES IN [ ${days}d : ${hours}h : ${minutes}m ]`;
+
+        if (distance < 0) {
+            clearInterval(x);
+            timerEl.innerHTML = "EARLY BIRD ENDED";
+        }
+    }, 1000);
+
+</script>
+</body>
+</html>
