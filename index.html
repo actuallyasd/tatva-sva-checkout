@@ -78,6 +78,9 @@
             border-radius: 2px;
             transition: background 0.3s;
             margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
         .btn:hover { background: #333; }
         .btn-outline { background: transparent; color: #1A1A1A; border: 1px solid #1A1A1A; margin-top: 15px; }
@@ -115,7 +118,7 @@
         .gallery { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory;}
         .gallery img { width: 85%; height: 220px; object-fit: cover; scroll-snap-align: center; border-radius: 2px; flex-shrink: 0; }
         
-        /* Location Block (Updated to Clickable Card) */
+        /* Location Block */
         .location-link {
             text-decoration: none;
             color: inherit;
@@ -130,9 +133,7 @@
             transition: border-color 0.2s;
             cursor: pointer;
         }
-        .location-box:hover {
-            border-color: #1A1A1A;
-        }
+        .location-box:hover { border-color: #1A1A1A; }
         .location-header {
             display: flex;
             justify-content: space-between;
@@ -190,7 +191,6 @@
             <img src="assets/gallery10.jpg" alt="Tirthan Valley Retreat 10">
         </div>
         
-        <!-- Maps & Rating Module (Clickable Card to GMB) -->
         <a href="https://share.google/g4CgPrY9SOMPeCgbb" target="_blank" class="location-link">
             <div class="location-box">
                 <div class="location-header">
@@ -270,22 +270,24 @@
 
     <!-- STEP 5: Checkout / Handoff -->
     <div class="step" id="step-5">
-        <h2 class="title" style="margin-bottom: 20px;">Complete Booking</h2>
-        <div class="timer-box countdown" style="margin-bottom: 20px;">Loading timer...</div>
+        <div id="checkout-content">
+            <h2 class="title" style="margin-bottom: 20px;">Complete Booking</h2>
+            <div class="timer-box countdown" style="margin-bottom: 20px;">Loading timer...</div>
 
-        <p class="subtitle" style="margin-bottom: 20px;" id="checkout-text">
-            Your profile looks like a great fit, <span id="out-name" style="font-weight:600;"></span>.<br><br>
-            To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
-        </p>
-        
-        <!-- Tap to Copy UI -->
-        <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px; cursor: pointer;" onclick="copyUPI()">
-            <p class="label">Pay Via UPI (Tap to Copy)</p>
-            <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px; transition: color 0.3s;" id="upi-id">tatvasva@upi</p>
+            <p class="subtitle" style="margin-bottom: 20px;" id="checkout-text">
+                Your profile looks like a great fit, <span id="out-name" style="font-weight:600;"></span>.<br><br>
+                To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
+            </p>
+            
+            <!-- Tap to Copy UI -->
+            <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px; cursor: pointer;" onclick="copyUPI()">
+                <p class="label">Pay Via UPI (Tap to Copy)</p>
+                <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px; transition: color 0.3s;" id="upi-id">tatvasva@upi</p>
+            </div>
+
+            <button class="btn btn-whatsapp" onclick="submitDataAndWhatsApp()" id="submit-btn">I've Paid - Send Screenshot</button>
+            <button class="btn btn-outline" onclick="prevStep(5)">Wait, go back</button>
         </div>
-
-        <button class="btn btn-whatsapp" onclick="submitDataAndWhatsApp()" id="submit-btn">I've Paid - Send Screenshot</button>
-        <button class="btn btn-outline" onclick="prevStep(5)">Wait, go back</button>
     </div>
 
 </div>
@@ -390,7 +392,7 @@
         });
     }
 
-    /* --- FINAL SUBMISSION & WHATSAPP --- */
+    /* --- FINAL SUBMISSION & SAFE WHATSAPP HANDOFF (IFRAME-SAFE) --- */
     function submitDataAndWhatsApp() {
         const btn = document.getElementById('submit-btn');
         btn.innerText = "Processing...";
@@ -399,27 +401,32 @@
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwxfXxEi1TezMpe3H6siA0iRcMySQ4v7ULa2ZXkgs7xCiAFFDQJfUJ5YQq4Q96fEl0ThA/exec"; 
         const WHATSAPP_NUMBER = "919999999999"; 
 
+        // 1. Silent background fetch to Google Sheets webhook
         fetch(WEBHOOK_URL, {
             method: 'POST',
             mode: 'no-cors', 
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(userPayload)
-        })
-        .then(() => {
-            const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType} for the Oct 23 retreat. Here is my payment screenshot!`;
-            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        })
-        .catch(err => {
-            console.error("Webhook Error:", err);
-            const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType}.`;
-            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        });
+        }).catch(err => console.error("Webhook Error:", err));
+
+        // 2. Build WhatsApp URL
+        const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType} for the Oct 23 retreat. Here is my payment screenshot!`;
+        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+        // 3. Render safe breakout link inside the quiz UI (prevents iframe block)
+        document.getElementById('checkout-content').innerHTML = `
+            <h2 class="title" style="margin-bottom: 15px;">You're Almost Done!</h2>
+            <p class="subtitle" style="margin-bottom: 25px;">
+                Your details have been logged securely. Tap the button below to open WhatsApp and send your deposit screenshot to the founders.
+            </p>
+            <a href="${waUrl}" target="_blank" class="btn btn-whatsapp">
+                Open WhatsApp & Send Screenshot ↗
+            </a>
+        `;
     }
 
     /* --- MULTI-STEP COUNTDOWN TIMER --- */
     const countDownDate = new Date("Oct 12, 2026 23:59:59").getTime();
-    
-    // Select all instances of the timer class
     const timerEls = document.querySelectorAll(".countdown");
 
     const x = setInterval(function() {
@@ -433,7 +440,6 @@
 
         const timeString = `EARLY BIRD CLOSES IN [ ${days}d : ${hours}h : ${minutes}m : ${seconds}s ]`;
 
-        // Update every timer element on the page
         timerEls.forEach(el => {
             el.innerHTML = timeString;
         });
