@@ -264,9 +264,10 @@
             To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
         </p>
         
-        <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px;">
-            <p class="label">Pay Via UPI</p>
-            <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px;">tatvasva@upi</p>
+        <!-- UPDATED: Tap to Copy UI -->
+        <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px; cursor: pointer;" onclick="copyUPI()">
+            <p class="label">Pay Via UPI (Tap to Copy)</p>
+            <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px; transition: color 0.3s;" id="upi-id">tatvasva@upi</p>
         </div>
 
         <button class="btn btn-whatsapp" onclick="submitDataAndWhatsApp()" id="submit-btn">I've Paid - Send Screenshot</button>
@@ -362,6 +363,19 @@
         }
     }
 
+    /* --- UPI COPY LOGIC --- */
+    function copyUPI() {
+        navigator.clipboard.writeText("tatvasva@upi").then(() => {
+            const upiEl = document.getElementById("upi-id");
+            upiEl.innerText = "✓ COPIED";
+            upiEl.style.color = "#25D366";
+            setTimeout(() => {
+                upiEl.innerText = "tatvasva@upi";
+                upiEl.style.color = "#1A1A1A";
+            }, 2000);
+        });
+    }
+
     /* --- FINAL SUBMISSION & WHATSAPP --- */
     function submitDataAndWhatsApp() {
         const btn = document.getElementById('submit-btn');
@@ -402,8 +416,9 @@
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000); 
 
-        timerEl.innerHTML = `EARLY BIRD CLOSES IN [ ${days}d : ${hours}h : ${minutes}m ]`;
+        timerEl.innerHTML = `EARLY BIRD CLOSES IN [ ${days}d : ${hours}h : ${minutes}m : ${seconds}s ]`;
 
         if (distance < 0) {
             clearInterval(x);
