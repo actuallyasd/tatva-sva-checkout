@@ -100,69 +100,89 @@
         }
         .select-btn.selected { border-color: #1A1A1A; background: #1A1A1A; color: white; }
 
-        /* Pricing Cards */
+        /* Pricing Cards (Accordion) */
         .rate-card {
             border: 1px solid #E0E0E0;
-            padding: 20px;
             margin-bottom: 15px;
-            cursor: pointer;
             transition: all 0.2s;
+            border-radius: 2px;
+            overflow: hidden;
         }
         .rate-card.selected { border: 2px solid #1A1A1A; }
+        .rate-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .rate-info { flex: 1; }
         .rate-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 5px; }
         .rate-price { font-size: 18px; font-weight: 500; }
         .strike { text-decoration: line-through; color: #999; font-size: 14px; margin-left: 8px; }
         .early-badge { display: inline-block; background: #f0e6d2; color: #8a6d3b; font-size: 11px; padding: 3px 8px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        
+        /* Accordion Content */
+        .accordion-content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid #F0F0F0;
+            background: #FAFAFA;
+        }
+        .accordion-content.open { display: block; animation: slideDown 0.3s ease-out; }
+        .accordion-gallery { display: flex; gap: 8px; overflow-x: auto; margin-top: 15px; scroll-snap-type: x mandatory; padding-bottom: 5px;}
+        .accordion-gallery img { height: 120px; width: 85%; object-fit: cover; border-radius: 2px; scroll-snap-align: center; flex-shrink: 0;}
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Inclusions List */
+        .inclusions-box {
+            background: #FAFAFA;
+            padding: 20px;
+            border-radius: 2px;
+            border: 1px solid #E0E0E0;
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .inclusions-box ul { padding-left: 20px; margin-bottom: 15px; }
+        .inclusions-box h4 { margin-bottom: 10px; font-weight: 600; }
+
+        /* Checkbox UI */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .checkbox-wrapper input[type="checkbox"] { margin-right: 12px; margin-top: 3px; cursor: pointer; }
+        .checkbox-text { font-size: 13px; line-height: 1.5; }
+        .discount-highlight { color: #d9534f; font-weight: 600; }
 
         /* Gallery */
         .gallery { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory;}
         .gallery img { width: 85%; height: 220px; object-fit: cover; scroll-snap-align: center; border-radius: 2px; flex-shrink: 0; }
         
         /* Location Block */
-        .location-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            margin-bottom: 25px;
-        }
-        .location-box {
-            padding: 18px 15px;
-            background: #FAFAFA;
-            border: 1px solid #E0E0E0;
-            border-radius: 2px;
-            transition: border-color 0.2s;
-            cursor: pointer;
-        }
+        .location-link { text-decoration: none; color: inherit; display: block; margin-bottom: 25px; cursor: pointer; }
+        .location-box { padding: 18px 15px; background: #FAFAFA; border: 1px solid #E0E0E0; border-radius: 2px; transition: border-color 0.2s; cursor: pointer; }
         .location-box:hover { border-color: #1A1A1A; }
-        .location-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .location-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .location-rating {
-            font-size: 12px;
-            font-weight: 600;
-            background: #1A1A1A;
-            color: #FFF;
-            padding: 4px 8px;
-            border-radius: 2px;
-            letter-spacing: 0.5px;
-        }
-        .location-action {
-            font-size: 13px;
-            color: #666;
-            margin-top: 8px;
-            font-weight: 500;
-        }
+        .location-header { display: flex; justify-content: space-between; align-items: center; }
+        .location-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; }
+        .location-rating { font-size: 12px; font-weight: 600; background: #1A1A1A; color: #FFF; padding: 4px 8px; border-radius: 2px; letter-spacing: 0.5px; }
+        .location-action { font-size: 13px; color: #666; margin-top: 8px; font-weight: 500; }
 
         /* Timer */
         .timer-box { background: #1A1A1A; color: white; text-align: center; padding: 12px; margin-bottom: 25px; font-size: 14px; letter-spacing: 1px;}
         
+        /* UPI QR */
+        .upi-qr { text-align: center; margin-bottom: 15px; }
+        .upi-qr img { max-width: 150px; border-radius: 4px; border: 1px solid #E0E0E0; padding: 5px; background: white;}
+
         /* Error message */
         .error { color: #d9534f; font-size: 13px; display: none; margin-bottom: 15px; }
     </style>
@@ -178,6 +198,8 @@
         
         <div class="timer-box countdown">Loading timer...</div>
         
+        <!-- Resort Gallery -->
+        <h3 style="font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Inter', sans-serif;">The Space</h3>
         <div class="gallery">
             <img src="assets/gallery1.jpg" alt="Tirthan Valley Retreat 1">
             <img src="assets/gallery2.jpg" alt="Tirthan Valley Retreat 2">
@@ -191,15 +213,25 @@
             <img src="assets/gallery10.jpg" alt="Tirthan Valley Retreat 10">
         </div>
         
-        <a href="https://share.google/g4CgPrY9SOMPeCgbb" target="_blank" class="location-link">
+        <!-- Location Block (Visual Only to avoid external link validation errors) -->
+        <div class="location-link">
             <div class="location-box">
                 <div class="location-header">
                     <span class="location-name">The Woods, Tirthan</span>
                     <span class="location-rating">★ 4.9/5</span>
                 </div>
-                <div class="location-action">View photos & reviews on Google ↗</div>
+                <div class="location-action">Search for photos & reviews on Google ↗</div>
             </div>
-        </a>
+        </div>
+
+        <!-- Activities Gallery -->
+        <h3 style="font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Inter', sans-serif; margin-top: 10px;">The Experience</h3>
+        <div class="gallery">
+            <img src="assets/activity1.jpg" alt="Activity 1">
+            <img src="assets/activity2.jpg" alt="Activity 2">
+            <img src="assets/activity3.jpg" alt="Activity 3">
+            <img src="assets/activity4.jpg" alt="Activity 4">
+        </div>
 
         <p class="subtitle" style="margin-bottom: 15px;">Step entirely off the grid. Only 15 spots available.</p>
         <button class="btn" onclick="nextStep(1)">Apply Now</button>
@@ -230,6 +262,9 @@
         <label class="label">Full Name</label>
         <input type="text" id="entry-name" placeholder="E.g. Sarah Jenkins">
         
+        <label class="label">Profession</label>
+        <input type="text" id="entry-profession" placeholder="E.g. Marketing Director">
+
         <label class="label">WhatsApp Number</label>
         <input type="tel" id="entry-phone" placeholder="+91">
         
@@ -239,7 +274,7 @@
         <label class="label">Dietary/Accessibility Needs (Optional)</label>
         <textarea id="entry-notes" rows="2" placeholder="Any preferences or requirements?"></textarea>
 
-        <div id="err-step3" class="error">Please fill in your name and WhatsApp number.</div>
+        <div id="err-step3" class="error">Please fill in your name, profession, and WhatsApp number.</div>
         <button class="btn" onclick="validateStep3()">Continue</button>
         <button class="btn btn-outline" onclick="prevStep(3)">Back</button>
     </div>
@@ -251,16 +286,61 @@
         
         <div class="timer-box countdown">Loading timer...</div>
 
-        <div class="rate-card" id="room-bunk" onclick="selectRoom('Bunk Bed', 17999, 22000, 'room-bunk')">
-            <span class="early-badge">Early Bird</span>
-            <div class="rate-title">Bunk Bed</div>
-            <div class="rate-price">₹17,999 <span class="strike">₹22,000</span></div>
+        <!-- Bunk Bed Accordion -->
+        <div class="rate-card" id="room-bunk">
+            <div class="rate-header" onclick="toggleRoom('Bunk Bed', 17999, 20999, 'room-bunk')">
+                <div class="rate-info">
+                    <span class="early-badge">Early Bird</span>
+                    <div class="rate-title">Bunk Bed</div>
+                    <div class="rate-price">₹17,999 <span class="strike">₹20,999</span></div>
+                </div>
+                <div style="font-size: 20px; color: #666;" id="icon-bunk">+</div>
+            </div>
+            <div class="accordion-content" id="content-bunk">
+                <div class="accordion-gallery">
+                    <img src="assets/bb1.jpg" alt="Bunk Bed 1">
+                    <img src="assets/bb2.jpg" alt="Bunk Bed 2">
+                </div>
+            </div>
         </div>
 
-        <div class="rate-card" id="room-private" onclick="selectRoom('Private Room', 18999, 24000, 'room-private')">
-            <span class="early-badge">Early Bird</span>
-            <div class="rate-title">Private Room</div>
-            <div class="rate-price">₹18,999 <span class="strike">₹24,000</span></div>
+        <!-- Private Room Accordion -->
+        <div class="rate-card" id="room-private">
+            <div class="rate-header" onclick="toggleRoom('Private Room', 18999, 21999, 'room-private')">
+                <div class="rate-info">
+                    <span class="early-badge">Early Bird</span>
+                    <div class="rate-title">Private Room</div>
+                    <div class="rate-price">₹18,999 <span class="strike">₹21,999</span></div>
+                </div>
+                <div style="font-size: 20px; color: #666;" id="icon-private">+</div>
+            </div>
+            <div class="accordion-content" id="content-private">
+                <div class="accordion-gallery">
+                    <img src="assets/pr1.jpg" alt="Private Room 1">
+                    <img src="assets/pr2.jpg" alt="Private Room 2">
+                </div>
+            </div>
+        </div>
+
+        <!-- Inclusions & Exclusions -->
+        <div class="inclusions-box">
+            <h4>This includes your:</h4>
+            <ul>
+                <li>Welcome kit</li>
+                <li>Stays (bunks/rooms)</li>
+                <li>All Meals</li>
+                <li>The 5-element journey and experiences</li>
+                <li>Open Mountain Sound Healing</li>
+                <li>Immersive Expressive Arts</li>
+                <li>AKATHYA live musical storytelling evening</li>
+                <li>Your takeaway Artworks</li>
+                <li>Your pickup + drop from the Aut bus stop to Tirthan Valley</li>
+            </ul>
+            <h4>Exclusions:</h4>
+            <ul>
+                <li>Your travel till Aut bus stop</li>
+                <li>Miscellaneous cost</li>
+            </ul>
         </div>
 
         <div id="err-step4" class="error">Please select a room.</div>
@@ -279,10 +359,25 @@
                 To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
             </p>
             
-            <!-- Tap to Copy UI -->
-            <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px; cursor: pointer;" onclick="copyUPI()">
-                <p class="label">Pay Via UPI (Tap to Copy)</p>
-                <p style="font-size:18px; font-weight:600; font-family: monospace; letter-spacing: 1px; transition: color 0.3s;" id="upi-id">tatvasva@upi</p>
+            <!-- Plus One Discount Checkbox -->
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="friend-discount" onchange="calculateDiscount()">
+                <div class="checkbox-text">
+                    <strong>Are you travelling with a friend?</strong><br>
+                    Check this box to get <span class="discount-highlight">₹1,000 off</span> your total ticket.<br>
+                    <span style="color:#888; font-size:11px; display:block; margin-top:4px;">*Reduces your initial deposit by ₹500 today. Subject to manual verification by the Tatva-sva team. If unverified, the full remainder will be charged.</span>
+                </div>
+            </label>
+
+            <!-- Tap to Copy UI with QR -->
+            <div style="background:#FAFAFA; padding:20px; border:1px solid #E0E0E0; text-align:center; margin-bottom:30px; border-radius: 2px;">
+                <div class="upi-qr">
+                    <img src="assets/upiqr.jpg" alt="Scan to Pay UPI">
+                </div>
+                <div style="cursor: pointer;" onclick="copyUPI()">
+                    <p class="label">Or Pay Via UPI (Tap to Copy)</p>
+                    <p style="font-size:16px; font-weight:600; font-family: monospace; letter-spacing: 0.5px; transition: color 0.3s; word-break: break-all;" id="upi-id">siddhigheewala2013-1@okaxis</p>
+                </div>
             </div>
 
             <button class="btn btn-whatsapp" onclick="submitDataAndWhatsApp()" id="submit-btn">I've Paid - Send Screenshot</button>
@@ -297,12 +392,15 @@
     const userPayload = {
         needs: [],
         name: "",
+        profession: "",
         phone: "",
         city: "",
         notes: "",
         roomType: "",
         totalPrice: 0,
-        depositAmount: 0
+        depositAmount: 0,
+        baseDeposit: 0, // Store original deposit before friend discount
+        hasFriendDiscount: false
     };
 
     /* --- STEP NAVIGATION --- */
@@ -344,11 +442,12 @@
     /* --- STEP 3 LOGIC --- */
     function validateStep3() {
         userPayload.name = document.getElementById('entry-name').value.trim();
+        userPayload.profession = document.getElementById('entry-profession').value.trim();
         userPayload.phone = document.getElementById('entry-phone').value.trim();
         userPayload.city = document.getElementById('entry-city').value.trim();
         userPayload.notes = document.getElementById('entry-notes').value.trim();
 
-        if(!userPayload.name || !userPayload.phone) {
+        if(!userPayload.name || !userPayload.profession || !userPayload.phone) {
             document.getElementById('err-step3').style.display = "block";
         } else {
             document.getElementById('err-step3').style.display = "none";
@@ -356,16 +455,41 @@
         }
     }
 
-    /* --- STEP 4 LOGIC --- */
-    function selectRoom(type, price, original, cardId) {
-        userPayload.roomType = type;
-        userPayload.totalPrice = price;
-        userPayload.depositAmount = price / 2;
+    /* --- STEP 4 LOGIC (Accordion) --- */
+    function toggleRoom(type, price, original, cardId) {
+        const isCurrentlySelected = userPayload.roomType === type;
 
+        // Reset both
         document.getElementById('room-bunk').classList.remove('selected');
         document.getElementById('room-private').classList.remove('selected');
-        document.getElementById(cardId).classList.add('selected');
+        document.getElementById('content-bunk').classList.remove('open');
+        document.getElementById('content-private').classList.remove('open');
+        document.getElementById('icon-bunk').innerText = "+";
+        document.getElementById('icon-private').innerText = "+";
+
+        if (isCurrentlySelected) {
+            // Deselecting
+            userPayload.roomType = "";
+            userPayload.totalPrice = 0;
+            userPayload.depositAmount = 0;
+            userPayload.baseDeposit = 0;
+        } else {
+            // Selecting new
+            userPayload.roomType = type;
+            userPayload.totalPrice = price;
+            userPayload.baseDeposit = price / 2;
+            userPayload.depositAmount = userPayload.baseDeposit;
+            
+            document.getElementById(cardId).classList.add('selected');
+            document.getElementById(cardId.replace('room-', 'content-')).classList.add('open');
+            document.getElementById(cardId.replace('room-', 'icon-')).innerText = "−";
+        }
+        
+        // Reset discount checkbox if they change rooms
+        document.getElementById('friend-discount').checked = false;
+        userPayload.hasFriendDiscount = false;
     }
+
     function validateStep4() {
         if(!userPayload.roomType) {
             document.getElementById('err-step4').style.display = "block";
@@ -373,26 +497,43 @@
             document.getElementById('err-step4').style.display = "none";
             document.getElementById('out-name').innerText = userPayload.name.split(' ')[0]; 
             document.getElementById('out-room').innerText = userPayload.roomType;
-            document.getElementById('out-deposit').innerText = "₹" + userPayload.depositAmount.toLocaleString('en-IN');
-            
+            updateDepositUI();
             nextStep(4);
         }
     }
 
+    /* --- DISCOUNT LOGIC --- */
+    function calculateDiscount() {
+        const isChecked = document.getElementById('friend-discount').checked;
+        userPayload.hasFriendDiscount = isChecked;
+        
+        if (isChecked) {
+            userPayload.depositAmount = userPayload.baseDeposit - 500;
+        } else {
+            userPayload.depositAmount = userPayload.baseDeposit;
+        }
+        updateDepositUI();
+    }
+    
+    function updateDepositUI() {
+        document.getElementById('out-deposit').innerText = "₹" + userPayload.depositAmount.toLocaleString('en-IN');
+    }
+
     /* --- UPI COPY LOGIC --- */
     function copyUPI() {
-        navigator.clipboard.writeText("tatvasva@upi").then(() => {
+        const upiString = "siddhigheewala2013-1@okaxis";
+        navigator.clipboard.writeText(upiString).then(() => {
             const upiEl = document.getElementById("upi-id");
             upiEl.innerText = "✓ COPIED";
             upiEl.style.color = "#25D366";
             setTimeout(() => {
-                upiEl.innerText = "tatvasva@upi";
+                upiEl.innerText = upiString;
                 upiEl.style.color = "#1A1A1A";
             }, 2000);
         });
     }
 
-    /* --- FINAL SUBMISSION & SAFE WHATSAPP HANDOFF (IFRAME-SAFE) --- */
+    /* --- FINAL SUBMISSION --- */
     function submitDataAndWhatsApp() {
         const btn = document.getElementById('submit-btn');
         btn.innerText = "Processing...";
@@ -410,7 +551,12 @@
         }).catch(err => console.error("Webhook Error:", err));
 
         // 2. Build WhatsApp URL
-        const message = `Hi Tatva-sva team! I just paid the deposit for the ${userPayload.roomType} for the Oct 23 retreat. Here is my payment screenshot!`;
+        let message = `Hi Tatva-sva team! I just paid the deposit of ₹${userPayload.depositAmount.toLocaleString('en-IN')} for the ${userPayload.roomType} for the Oct 23 retreat.`;
+        if (userPayload.hasFriendDiscount) {
+            message += ` (I applied the Plus-One discount!).`;
+        }
+        message += ` Here is my payment screenshot!`;
+        
         const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
         // 3. Render safe breakout link inside the quiz UI (prevents iframe block)
