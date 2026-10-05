@@ -131,7 +131,9 @@
         }
         .accordion-content.open { display: block; animation: slideDown 0.3s ease-out; }
         .accordion-gallery { display: flex; gap: 8px; overflow-x: auto; margin-top: 15px; scroll-snap-type: x mandatory; padding-bottom: 5px;}
-        .accordion-gallery img { height: 120px; width: 85%; object-fit: cover; border-radius: 2px; scroll-snap-align: center; flex-shrink: 0;}
+        
+        /* INCREASED HEIGHT TO 220px */
+        .accordion-gallery img { height: 220px; width: 85%; object-fit: cover; border-radius: 2px; scroll-snap-align: center; flex-shrink: 0;}
         
         @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -213,14 +215,13 @@
             <img src="assets/gallery10.jpg" alt="Tirthan Valley Retreat 10">
         </div>
         
-        <!-- Location Block (Visual Only to avoid external link validation errors) -->
-        <div class="location-link">
+        <div class="location-link" onclick="window.open('https://search.yahoo.com/search?p=The+Woods+Tirthan+Valley', '_blank')">
             <div class="location-box">
                 <div class="location-header">
                     <span class="location-name">The Woods, Tirthan</span>
                     <span class="location-rating">★ 4.9/5</span>
                 </div>
-                <div class="location-action">Search for photos & reviews on Google ↗</div>
+                <div class="location-action">View photos & reviews on Google ↗</div>
             </div>
         </div>
 
@@ -297,9 +298,15 @@
                 <div style="font-size: 20px; color: #666;" id="icon-bunk">+</div>
             </div>
             <div class="accordion-content" id="content-bunk">
+                <p style="font-size:13px; color:#666; margin-top:5px;">Shared space, individual comfort. Perfect for solo travelers.</p>
                 <div class="accordion-gallery">
                     <img src="assets/bb1.jpg" alt="Bunk Bed 1">
                     <img src="assets/bb2.jpg" alt="Bunk Bed 2">
+                    <img src="assets/bb3.jpg" alt="Bunk Bed 3">
+                    <img src="assets/bb4.jpg" alt="Bunk Bed 4">
+                                        <img src="assets/bb5.jpg" alt="Bunk Bed 5">
+                    <img src="assets/bb6.jpg" alt="Bunk Bed 6">
+
                 </div>
             </div>
         </div>
@@ -315,9 +322,19 @@
                 <div style="font-size: 20px; color: #666;" id="icon-private">+</div>
             </div>
             <div class="accordion-content" id="content-private">
+                <p style="font-size:13px; color:#666; margin-top:5px;">Your own sanctuary. Complete privacy and valley views.</p>
                 <div class="accordion-gallery">
                     <img src="assets/pr1.jpg" alt="Private Room 1">
                     <img src="assets/pr2.jpg" alt="Private Room 2">
+                    <img src="assets/pr3.jpg" alt="Private Room 3">
+                    <img src="assets/pr4.jpg" alt="Private Room 4">
+                                        <img src="assets/pr5.jpg" alt="Private Room 5">
+                                        <img src="assets/pr6.jpg" alt="Private Room 6">
+                    <img src="assets/pr7.jpg" alt="Private Room 7">
+                    <img src="assets/pr8.jpg" alt="Private Room 8">
+                    <img src="assets/pr9.jpg" alt="Private Room 9">
+
+
                 </div>
             </div>
         </div>
