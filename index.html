@@ -131,8 +131,6 @@
         }
         .accordion-content.open { display: block; animation: slideDown 0.3s ease-out; }
         .accordion-gallery { display: flex; gap: 8px; overflow-x: auto; margin-top: 15px; scroll-snap-type: x mandatory; padding-bottom: 5px;}
-        
-        /* INCREASED HEIGHT TO 220px */
         .accordion-gallery img { height: 220px; width: 85%; object-fit: cover; border-radius: 2px; scroll-snap-align: center; flex-shrink: 0;}
         
         @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -215,7 +213,8 @@
             <img src="assets/gallery10.jpg" alt="Tirthan Valley Retreat 10">
         </div>
         
-        <div class="location-link" onclick="window.open('https://search.yahoo.com/search?p=The+Woods+Tirthan+Valley', '_blank')">
+        <!-- Location Link -->
+        <a href="https://share.google/g4CgPrY9SOMPeCgbb" target="_blank" class="location-link">
             <div class="location-box">
                 <div class="location-header">
                     <span class="location-name">The Woods, Tirthan</span>
@@ -223,7 +222,7 @@
                 </div>
                 <div class="location-action">View photos & reviews on Google ↗</div>
             </div>
-        </div>
+        </a>
 
         <!-- Activities Gallery -->
         <h3 style="font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Inter', sans-serif; margin-top: 10px;">The Experience</h3>
@@ -304,9 +303,6 @@
                     <img src="assets/bb2.jpg" alt="Bunk Bed 2">
                     <img src="assets/bb3.jpg" alt="Bunk Bed 3">
                     <img src="assets/bb4.jpg" alt="Bunk Bed 4">
-                                        <img src="assets/bb5.jpg" alt="Bunk Bed 5">
-                    <img src="assets/bb6.jpg" alt="Bunk Bed 6">
-
                 </div>
             </div>
         </div>
@@ -328,13 +324,6 @@
                     <img src="assets/pr2.jpg" alt="Private Room 2">
                     <img src="assets/pr3.jpg" alt="Private Room 3">
                     <img src="assets/pr4.jpg" alt="Private Room 4">
-                                        <img src="assets/pr5.jpg" alt="Private Room 5">
-                                        <img src="assets/pr6.jpg" alt="Private Room 6">
-                    <img src="assets/pr7.jpg" alt="Private Room 7">
-                    <img src="assets/pr8.jpg" alt="Private Room 8">
-                    <img src="assets/pr9.jpg" alt="Private Room 9">
-
-
                 </div>
             </div>
         </div>
@@ -494,7 +483,7 @@
             // Selecting new
             userPayload.roomType = type;
             userPayload.totalPrice = price;
-            userPayload.baseDeposit = price / 2;
+            userPayload.baseDeposit = Math.floor(price / 2); // Rounded down to remove the decimal
             userPayload.depositAmount = userPayload.baseDeposit;
             
             document.getElementById(cardId).classList.add('selected');
