@@ -581,8 +581,9 @@
         `;
     }
 
-    /* --- MULTI-STEP COUNTDOWN TIMER --- */
-    const countDownDate = new Date("Oct 12, 2026 23:59:59").getTime();
+/* --- MULTI-STEP COUNTDOWN TIMER --- */
+    // Updated to Oct 10, 2026 to create a 3-day window from Oct 7
+    const countDownDate = new Date("Oct 10, 2026 23:59:59").getTime();
     const timerEls = document.querySelectorAll(".countdown");
 
     const x = setInterval(function() {
