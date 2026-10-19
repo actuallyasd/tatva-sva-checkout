@@ -120,8 +120,6 @@
         .rate-info { flex: 1; }
         .rate-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 5px; }
         .rate-price { font-size: 18px; font-weight: 500; }
-        .strike { text-decoration: line-through; color: #999; font-size: 14px; margin-left: 8px; }
-        .early-badge { display: inline-block; background: #f0e6d2; color: #8a6d3b; font-size: 11px; padding: 3px 8px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
         
         /* Accordion Content */
         .accordion-content {
@@ -177,9 +175,6 @@
         .location-rating { font-size: 12px; font-weight: 600; background: #1A1A1A; color: #FFF; padding: 4px 8px; border-radius: 2px; letter-spacing: 0.5px; }
         .location-action { font-size: 13px; color: #666; margin-top: 8px; font-weight: 500; }
 
-        /* Timer */
-        .timer-box { background: #1A1A1A; color: white; text-align: center; padding: 12px; margin-bottom: 25px; font-size: 14px; letter-spacing: 1px;}
-        
         /* UPI QR */
         .upi-qr { text-align: center; margin-bottom: 15px; }
         .upi-qr img { max-width: 150px; border-radius: 4px; border: 1px solid #E0E0E0; padding: 5px; background: white;}
@@ -198,9 +193,7 @@
         <!-- Image Header replacing the text title -->
         <img src="assets/header.png" alt="Tatva-sva Tirthan" class="header-logo">
         
-        <p class="subtitle">Oct 23-26 | 72 hours of complete stillness.</p>
-        
-        <div class="timer-box countdown">Loading timer...</div>
+        <p class="subtitle">Oct 23-25 | 72 hours of complete stillness.</p>
         
         <!-- Resort Gallery -->
         <h3 style="font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Inter', sans-serif;">The Space</h3>
@@ -286,17 +279,14 @@
     <!-- STEP 4: Rate Card -->
     <div class="step" id="step-4">
         <h2 class="title">Select Your Space</h2>
-        <p class="subtitle">Prices shown are Early Bird rates.</p>
-        
-        <div class="timer-box countdown">Loading timer...</div>
+        <p class="subtitle">Select your preferred space below.</p>
 
         <!-- Bunk Bed Accordion -->
         <div class="rate-card" id="room-bunk">
-            <div class="rate-header" onclick="toggleRoom('Bunk Bed', 17999, 20999, 'room-bunk')">
+            <div class="rate-header" onclick="toggleRoom('Bunk Bed', 16999, 'room-bunk')">
                 <div class="rate-info">
-                    <span class="early-badge">Early Bird</span>
                     <div class="rate-title">Bunk Bed</div>
-                    <div class="rate-price">₹17,999 <span class="strike">₹20,999</span></div>
+                    <div class="rate-price">₹16,999</div>
                 </div>
                 <div style="font-size: 20px; color: #666;" id="icon-bunk">+</div>
             </div>
@@ -313,11 +303,10 @@
 
         <!-- Private Room Accordion -->
         <div class="rate-card" id="room-private">
-            <div class="rate-header" onclick="toggleRoom('Private Room', 18999, 21999, 'room-private')">
+            <div class="rate-header" onclick="toggleRoom('Private Room (Twin Sharing)', 18999, 'room-private')">
                 <div class="rate-info">
-                    <span class="early-badge">Early Bird</span>
-                    <div class="rate-title">Private Room</div>
-                    <div class="rate-price">₹18,999 <span class="strike">₹21,999</span></div>
+                    <div class="rate-title">Private Room (Twin Sharing)</div>
+                    <div class="rate-price">₹18,999</div>
                 </div>
                 <div style="font-size: 20px; color: #666;" id="icon-private">+</div>
             </div>
@@ -362,8 +351,7 @@
     <div class="step" id="step-5">
         <div id="checkout-content">
             <h2 class="title" style="margin-bottom: 20px;">Complete Booking</h2>
-            <div class="timer-box countdown" style="margin-bottom: 20px;">Loading timer...</div>
-
+            
             <p class="subtitle" style="margin-bottom: 20px;" id="checkout-text">
                 Your profile looks like a great fit, <span id="out-name" style="font-weight:600;"></span>.<br><br>
                 To lock in your <span id="out-room" style="font-weight:600;"></span>, a 50% deposit of <span id="out-deposit" style="font-weight:600;"></span> is required.
@@ -466,7 +454,7 @@
     }
 
     /* --- STEP 4 LOGIC (Accordion) --- */
-    function toggleRoom(type, price, original, cardId) {
+    function toggleRoom(type, price, cardId) {
         const isCurrentlySelected = userPayload.roomType === type;
 
         // Reset both
@@ -580,34 +568,6 @@
             </a>
         `;
     }
-
-/* --- MULTI-STEP COUNTDOWN TIMER --- */
-    // Updated to Oct 10, 2026 to create a 3-day window from Oct 7
-    const countDownDate = new Date("Oct 10, 2026 23:59:59").getTime();
-    const timerEls = document.querySelectorAll(".countdown");
-
-    const x = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000); 
-
-        const timeString = `EARLY BIRD CLOSES IN [ ${days}d : ${hours}h : ${minutes}m : ${seconds}s ]`;
-
-        timerEls.forEach(el => {
-            el.innerHTML = timeString;
-        });
-
-        if (distance < 0) {
-            clearInterval(x);
-            timerEls.forEach(el => {
-                el.innerHTML = "EARLY BIRD ENDED";
-            });
-        }
-    }, 1000);
 
 </script>
 </body>
